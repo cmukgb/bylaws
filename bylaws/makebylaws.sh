@@ -2,7 +2,7 @@
 # that orgtracker insists on these days. Make sure that ~kgb/bylaws.current
 # is up to date.
 
-OFFICIAL_BYLAWS='/afs/andrew.cmu.edu/usr/kgb/bylaws.current'
+OFFICIAL_BYLAWS='../bylaws.current'
 TEX_BYLAWS='bylaws.tex'
 PDF_BYLAWS='bylaws.pdf'
 
