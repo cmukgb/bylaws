@@ -1,0 +1,3741 @@
+%!PS-Adobe-3.0
+%%Creator: psdit
+%%For: SunOS:bn29 (Bryan J Nagy)
+%%Title: stdin (ditroff)
+%%CreationDate: Thu Mar  5 16:46:44 1998
+%%DocumentNeededResources: (atend)
+%%DocumentSuppliedResources: DIThacks
+%%Pages: (atend)
+%%EndComments
+% psdit.pro -- prolog for ditroff translator
+% Copyright (c) 1985,1987,1992 Adobe Systems Incorporated. All Rights
+% Reserved.  
+% GOVERNMENT END USERS: See Notice file in TranScript library directory
+% -- probably /usr/lib/ps/Notice
+% RCS: $Header: /disks/hobo/vp6/snichols/rel4.0/src/transcript/lib/RCS/psdit.pro,v 4.0 1992/08/21 15:38:20 snichols Exp $
+/$DITroff 180 dict def $DITroff begin
+
+% Psfig additions
+/DocumentInitState [ matrix currentmatrix currentlinewidth currentlinecap
+currentlinejoin currentdash currentgray currentmiterlimit ] cvx def
+
+/startFig {
+	/SavedState save def
+	userdict maxlength dict begin
+	currentpoint transform
+
+	DocumentInitState setmiterlimit setgray setdash setlinejoin setlinecap
+		setlinewidth setmatrix
+
+	itransform moveto
+
+	/ury exch def
+	/urx exch def
+	/lly exch def
+	/llx exch def
+	/y exch 72 mul resolution div def
+	/x exch 72 mul resolution div def
+	
+	currentpoint /cy exch def /cx exch def
+
+	/sx x urx llx sub div def 	% scaling for x
+	/sy y ury lly sub div def	% scaling for y
+
+	sx sy scale			% scale by (sx,sy)
+
+	cx sx div llx sub
+	cy sy div ury sub translate
+	
+	/DefFigCTM matrix currentmatrix def
+
+	/initmatrix {
+		DefFigCTM setmatrix
+	} def
+	/defaultmatrix {
+		DefFigCTM exch copy
+	} def
+
+	/initgraphics {
+		DocumentInitState setmiterlimit setgray setdash 
+			setlinejoin setlinecap setlinewidth setmatrix
+		DefFigCTM setmatrix
+	} def
+
+	/showpage {
+		initgraphics
+	} def
+
+} def
+% Args are llx lly urx ury (in figure coordinates)
+/clipFig {
+	currentpoint 6 2 roll
+	newpath 4 copy
+	4 2 roll moveto
+	6 -1 roll exch lineto
+	exch lineto
+	exch lineto
+	closepath clip
+	newpath
+	moveto
+} def
+% doclip, if called, will always be just after a `startfig'
+/doclip { llx lly urx ury clipFig } def
+/endFig {
+	end SavedState restore
+} def
+/globalstart {
+	% Push details about the enviornment on the stack.
+	fontnum fontsize fontslant fontheight firstpage 
+	mh my resolution slotno currentpoint 
+	pagesave restore gsave 
+} def
+/globalend {
+	grestore moveto
+	/slotno exch def /resolution exch def /my exch def
+	/mh exch def /firstpage exch def /fontheight exch def
+	/fontslant exch def /fontsize exch def /fontnum exch def
+	F
+	/pagesave save def
+} def
+
+%% end XMOD additions
+/fontnum 1 def /fontsize 10 def /fontheight 10 def /fontslant 0 def
+/xi {/fontnum 1 def /fontsize 10 def /fontheight 10 def /fontslant 0 def F
+  }def
+/ps {/pagesave save def 72 mul 0 exch translate 72 resolution div dup neg
+      scale 0 0 moveto } def
+/PB{save /psv exch def currentpoint translate
+  resolution 72 div dup neg scale 0 0 moveto}def
+/PE{psv restore}def
+/m1 matrix def /m2 matrix def /m3 matrix def /oldmat matrix def
+/tan{dup sin exch cos div}bind def
+/point{resolution 72 div mul}bind def
+/dround	{transform round exch round exch itransform}bind def
+/xT{/devname exch def}def
+/xr{/mh exch def /my exch def /resolution exch def}def
+/xp{}def
+/xs{docsave restore end}def
+/xt{}def
+/xf{/fontname exch def /slotno exch def fontnames slotno get fontname eq not
+ {fonts slotno fontname findfont put fontnames slotno fontname put}if}def
+/xH{/fontheight exch def F}bind def
+/xS{/fontslant exch def F}bind def
+/s{/fontsize exch def /fontheight fontsize def F}bind def
+/f{/fontnum exch def F}bind def
+/F{fontheight 0 le {/fontheight fontsize def}if
+   fonts fontnum get fontsize point 0 0 fontheight point neg 0 0 m1 astore
+   fontslant 0 ne{1 0 fontslant neg tan 1 0 0 m2 astore m3 concatmatrix}if
+   makefont setfont .04 fontsize point mul 0 dround pop setlinewidth}bind def
+/X{exch currentpoint exch pop moveto show}bind def
+/N{3 1 roll moveto show}bind def
+/Y{exch currentpoint pop exch moveto show}bind def
+/S /show load def
+/ditpush{}def/ditpop{}def
+/AX{3 -1 roll currentpoint exch pop moveto 0 exch ashow}bind def
+/AN{4 2 roll moveto 0 exch ashow}bind def
+/AY{3 -1 roll currentpoint pop exch moveto 0 exch ashow}bind def
+/AS{0 exch ashow}bind def
+/MX{currentpoint exch pop moveto}bind def
+/MY{currentpoint pop exch moveto}bind def
+/MXY /moveto load def
+/cb{pop}def	% action on unknown char -- nothing for now
+/n{}def/w{}def
+/p{pop pagesave restore showpage}def
+/abspoint{currentpoint exch pop add exch currentpoint pop add exch}def
+/dstroke{currentpoint stroke moveto}bind def
+/Dl{2 copy gsave rlineto stroke grestore rmoveto}bind def
+/arcellipse{oldmat currentmatrix pop
+ currentpoint translate 1 diamv diamh div scale /rad diamh 2 div def
+ rad 0 rad -180 180 arc oldmat setmatrix}def
+/Dc{gsave dup /diamv exch def /diamh exch def arcellipse dstroke 
+    grestore diamh 0 rmoveto}def
+/De{gsave /diamv exch def /diamh exch def arcellipse dstroke
+    grestore diamh 0 rmoveto}def
+/Da{currentpoint /by exch def /bx exch def /fy exch def /fx exch def
+   /cy exch def /cx exch def /rad cx cx mul cy cy mul add sqrt def
+   /ang1 cy neg cx neg atan def /ang2 fy fx atan def cx bx add cy by add
+   2 copy rad ang1 ang2 arcn stroke exch fx add exch fy add moveto}def
+/Barray 200 array def % 200 values in a wiggle
+/D~{mark}def
+/D~~{counttomark Barray exch 0 exch getinterval astore /Bcontrol exch def pop
+ /Blen Bcontrol length def Blen 4 ge Blen 2 mod 0 eq and
+ {Bcontrol 0 get Bcontrol 1 get abspoint /Ycont exch def /Xcont exch def
+  Bcontrol 0 2 copy get 2 mul put Bcontrol 1 2 copy get 2 mul put
+  Bcontrol Blen 2 sub 2 copy get 2 mul put
+  Bcontrol Blen 1 sub 2 copy get 2 mul put
+  /Ybi /Xbi currentpoint 3 1 roll def def 0 2 Blen 4 sub
+  {/i exch def
+   Bcontrol i get 3 div Bcontrol i 1 add get 3 div
+   Bcontrol i get 3 mul Bcontrol i 2 add get add 6 div
+   Bcontrol i 1 add get 3 mul Bcontrol i 3 add get add 6 div
+   /Xbi Xcont Bcontrol i 2 add get 2 div add def
+   /Ybi Ycont Bcontrol i 3 add get 2 div add def
+   /Xcont Xcont Bcontrol i 2 add get add def
+   /Ycont Ycont Bcontrol i 3 add get add def
+   Xbi currentpoint pop sub Ybi currentpoint exch pop sub rcurveto
+  }for dstroke}if}def
+end
+/ditstart{$DITroff begin
+ /nfonts 60 def			% NFONTS makedev/ditroff dependent!
+ /fonts[nfonts{0}repeat]def
+ /fontnames[nfonts{()}repeat]def
+/docsave save def
+}def
+
+% character outcalls
+/oc {/pswid exch def /cc exch def /name exch def
+   /ditwid pswid fontsize mul resolution mul 72000 div def
+   /ditsiz fontsize resolution mul 72 div def
+   ocprocs name known{ocprocs name get exec}{name cb}
+   ifelse}def
+/fractm [.65 0 0 .6 0 0] def
+/fraction
+ {/fden exch def /fnum exch def gsave /cf currentfont def
+  cf fractm makefont setfont 0 .3 dm 2 copy neg rmoveto
+  fnum show rmoveto currentfont cf setfont(\244)show setfont fden show 
+  grestore ditwid 0 rmoveto} def
+/oce {grestore ditwid 0 rmoveto}def
+/dm {ditsiz mul}def
+/ocprocs 50 dict def ocprocs begin
+(14){(1)(4)fraction}def
+(12){(1)(2)fraction}def
+(34){(3)(4)fraction}def
+(13){(1)(3)fraction}def
+(23){(2)(3)fraction}def
+(18){(1)(8)fraction}def
+(38){(3)(8)fraction}def
+(58){(5)(8)fraction}def
+(78){(7)(8)fraction}def
+(sr){gsave .05 dm .16 dm rmoveto(\326)show oce}def
+(is){gsave 0 .15 dm rmoveto(\362)show oce}def
+(->){gsave 0 .02 dm rmoveto(\256)show oce}def
+(<-){gsave 0 .02 dm rmoveto(\254)show oce}def
+(==){gsave 0 .05 dm rmoveto(\272)show oce}def
+end
+%%BeginResource: font DIThacks
+% DIThacks fonts for some special chars
+50 dict dup begin
+/FontType 3 def
+/FontName /DIThacks def
+/FontMatrix [.001 0.0 0.0 .001 0.0 0.0] def
+/FontBBox [-220 -280 900 900] def% a lie but ...
+/Encoding 256 array def
+0 1 255{Encoding exch /.notdef put}for
+Encoding
+ dup 8#040/space put %space
+ dup 8#110/rc put %right ceil
+ dup 8#111/lt put %left  top curl
+ dup 8#112/bv put %bold vert
+ dup 8#113/lk put %left  mid curl
+ dup 8#114/lb put %left  bot curl
+ dup 8#115/rt put %right top curl
+ dup 8#116/rk put %right mid curl
+ dup 8#117/rb put %right bot curl
+ dup 8#120/rf put %right floor
+ dup 8#121/lf put %left  floor
+ dup 8#122/lc put %left  ceil
+ dup 8#140/sq put %square
+ dup 8#141/bx put %box
+ dup 8#142/ci put %circle
+ dup 8#143/br put %box rule
+ dup 8#144/rn put %root extender
+ dup 8#145/vr put %vertical rule
+ dup 8#146/ob put %outline bullet
+ dup 8#147/bu put %bullet
+ dup 8#150/ru put %rule
+ dup 8#151/ul put %underline
+ pop
+/DITfd 100 dict def
+/BuildChar{0 begin
+ /cc exch def /fd exch def
+ /charname fd /Encoding get cc get def
+ /charwid fd /Metrics get charname get def
+ /charproc fd /CharProcs get charname get def
+ charwid 0 fd /FontBBox get aload pop setcachedevice
+ 40 setlinewidth
+ newpath 0 0 moveto gsave charproc grestore
+ end}def
+/BuildChar load 0 DITfd put
+%/UniqueID 5 def
+/CharProcs 50 dict def
+CharProcs begin
+/space{}def
+/.notdef{}def
+/ru{500 0 rls}def
+/rn{0 750 moveto 500 0 rls}def
+/vr{20 800 moveto 0 -770 rls}def
+/bv{20 800 moveto 0 -1000 rls}def
+/br{20 770 moveto 0 -1040 rls}def
+/ul{0 -250 moveto 500 0 rls}def
+/ob{200 250 rmoveto currentpoint newpath 200 0 360 arc closepath stroke}def
+/bu{200 250 rmoveto currentpoint newpath 200 0 360 arc closepath fill}def
+/sq{80 0 rmoveto currentpoint dround newpath moveto
+    640 0 rlineto 0 640 rlineto -640 0 rlineto closepath stroke}def
+/bx{80 0 rmoveto currentpoint dround newpath moveto
+    640 0 rlineto 0 640 rlineto -640 0 rlineto closepath fill}def
+/ci{355 333 rmoveto currentpoint newpath 333 0 360 arc
+    50 setlinewidth stroke}def
+
+/lt{20 -200 moveto 0 550 rlineto currx 800 2cx s4 add exch s4 a4p stroke}def
+/lb{20 800 moveto 0 -550 rlineto currx -200 2cx s4 add exch s4 a4p stroke}def
+/rt{20 -200 moveto 0 550 rlineto currx 800 2cx s4 sub exch s4 a4p stroke}def
+/rb{20 800 moveto 0 -500 rlineto currx -200 2cx s4 sub exch s4 a4p stroke}def
+/lk{20 800 moveto 20 300 -280 300 s4 arcto pop pop 1000 sub
+    currentpoint stroke moveto
+    20 300 4 2 roll s4 a4p 20 -200 lineto stroke}def
+/rk{20 800 moveto 20 300 320 300 s4 arcto pop pop 1000 sub
+    currentpoint stroke moveto
+    20 300 4 2 roll s4 a4p 20 -200 lineto stroke}def
+/lf{20 800 moveto 0 -1000 rlineto s4 0 rls}def
+/rf{20 800 moveto 0 -1000 rlineto s4 neg 0 rls}def
+/lc{20 -200 moveto 0 1000 rlineto s4 0 rls}def
+/rc{20 -200 moveto 0 1000 rlineto s4 neg 0 rls}def
+end
+
+/Metrics 50 dict def Metrics begin
+/.notdef 0 def
+/space 500 def
+/ru 500 def
+/br 0 def
+/lt 250 def
+/lb 250 def
+/rt 250 def
+/rb 250 def
+/lk 250 def
+/rk 250 def
+/rc 250 def
+/lc 250 def
+/rf 250 def
+/lf 250 def
+/bv 250 def
+/ob 350 def
+/bu 350 def
+/ci 750 def
+/bx 750 def
+/sq 750 def
+/rn 500 def
+/ul 500 def
+/vr 0 def
+end
+
+DITfd begin
+/s2 500 def /s4 250 def /s3 333 def
+/a4p{arcto pop pop pop pop}def
+/2cx{2 copy exch}def
+/rls{rlineto stroke}def
+/currx{currentpoint pop}def
+/dround{transform round exch round exch itransform} def
+end
+end
+/DIThacks exch definefont pop
+%%EndResource 
+%%EndProlog
+%%BeginSetup
+ditstart
+(psc)xT
+576 1 1 xr
+%%IncludeResource: font Times-Roman
+1(Times-Roman)xf 1 f
+%%IncludeResource: font Times-Italic
+2(Times-Italic)xf 2 f
+%%IncludeResource: font Times-Bold
+3(Times-Bold)xf 3 f
+%%IncludeResource: font Times-BoldItalic
+4(Times-BoldItalic)xf 4 f
+%%IncludeResource: font Helvetica
+5(Helvetica)xf 5 f
+%%IncludeResource: font Helvetica-Oblique
+6(Helvetica-Oblique)xf 6 f
+%%IncludeResource: font Helvetica-Bold
+7(Helvetica-Bold)xf 7 f
+%%IncludeResource: font Helvetica-BoldOblique
+8(Helvetica-BoldOblique)xf 8 f
+%%IncludeResource: font Courier
+9(Courier)xf 9 f
+%%IncludeResource: font Courier-Oblique
+10(Courier-Oblique)xf 10 f
+%%IncludeResource: font Courier-Bold
+11(Courier-Bold)xf 11 f
+%%IncludeResource: font Courier-BoldOblique
+12(Courier-BoldOblique)xf 12 f
+%%IncludeResource: font Symbol
+13(Symbol)xf 13 f
+14(DIThacks)xf 14 f
+%%IncludeResource: font Courier
+15(Courier)xf 15 f
+10 s
+1 f
+%%IncludeFeature: *PageSize Letter
+xi
+%%EndSetup
+
+%%Page: 1 1
+11.00 ps
+10 s 10 xH 0 xS 1 f
+20 s
+2123 760(B)N
+2229(Y)X
+2344(LA)X
+2557(W)X
+2708(S)X
+2280 944(K)N
+2395(G)X
+2510(B)X
+3 f
+16 s
+2116 1272(ARTICLE)N
+2729(I)X
+1678 1416(NAM)N
+1983(E)X
+2100(AND)X
+2408(O)X
+2508(BJECTIVES)X
+1 f
+12 s
+720 1640(Section)N
+1033(1.)X
+1129(The)X
+1303(name)X
+1536(of)X
+1640(the)X
+1782(organization)X
+2288(shall)X
+2494(be)X
+2609(KGB.)X
+720 1864(Section)N
+1033(2.)X
+1129(The)X
+1303(objectives)X
+1718(of)X
+1822(the)X
+1964(organization)X
+2470(shall)X
+2676(be:)X
+1008 2088(a.)N
+1099(to)X
+1198(promote)X
+1543(a)X
+1610(spirit)X
+1832(of)X
+1936(fellowship)X
+2366(among)X
+2652(its)X
+2767(members.)X
+1008 2312(b.)N
+1104(to)X
+1203(take)X
+1388(an)X
+1503(active)X
+1758(and)X
+1921(positive)X
+2250(role)X
+2424(in)X
+2523(campus)X
+2841(life.)X
+720 2536(Section)N
+1040(3.)X
+1143(The)X
+1324(organization)X
+1837(shall)X
+2050(not)X
+2204(be)X
+2327(conducted)X
+2755(or)X
+2867(operated)X
+3231(for)X
+3375(pro\256t)X
+3615(and)X
+3786(no)X
+3914(part)X
+4096(of)X
+720 2648(any)N
+892(pro\256ts)X
+1170(or)X
+1283(remainder)X
+1707(or)X
+1820(residue)X
+2130(from)X
+2349(dues,)X
+2581(donations,)X
+3011(or)X
+3123(other)X
+3353(sources)X
+3673(of)X
+3785(income)X
+4101(to)X
+720 2760(the)N
+862(organization)X
+1368(shall)X
+1574(inure)X
+1796(to)X
+1895(the)X
+2037(personal)X
+2387(bene\256t)X
+2673(of)X
+2777(any)X
+2940(member)X
+3280(or)X
+3384(individual.)X
+3 f
+16 s
+2091 3016(ARTICLE)N
+2704(II)X
+2025 3160(DEFINITIO)N
+2707(NS)X
+1 f
+12 s
+720 3416(Section)N
+1063(1.)X
+1189(Standing)X
+1585(De\256nitions.)X
+2090(The)X
+2294(terms)X
+2562(de\256ned)X
+2899(as)X
+3033(follows)X
+3376(shall)X
+3613(be)X
+3759(considered)X
+720 3528(standing)N
+1070(de\256nitions:)X
+1008 3752(a.)N
+1102(Majority.)X
+1490(A)X
+1586(majority)X
+1940(shall)X
+2149(be)X
+2267(de\256ned)X
+2577(as)X
+2684(a)X
+2755(number)X
+3077(greater)X
+3373(then)X
+3567(one-half)X
+1008 3864(\(1/2\),)N
+1243(or)X
+1347(\256fty)X
+1531(percent)X
+1839(\(50%\),)X
+2127(of)X
+2231(the)X
+2373(total.)X
+1008 4088(b.)N
+1125(Organization)X
+1673(Quorum.)X
+2062(A)X
+2176(quorum)X
+2520(of)X
+2645(the)X
+2808(organization)X
+3336(is)X
+3446(required)X
+3813(in)X
+1008 4200(order)N
+1237(to)X
+1338(hold)X
+1535(meetings)X
+1909(as)X
+2015(set)X
+2148(forth)X
+2361(in)X
+2462(Article)X
+2756(4,)X
+2854(Sections)X
+3206(1)X
+3280(and)X
+3445(2,)X
+3542(and)X
+3706(shall)X
+1008 4312(be)N
+1128(either)X
+1377(a)X
+1450(majority)X
+1807(of)X
+1917(the)X
+2065(voting)X
+2341(members)X
+2724(or)X
+2834(seventy-\256ve)X
+3334(percent)X
+3648(\(75%\))X
+1008 4424(of)N
+1112(the)X
+1254(active)X
+1509(members.)X
+1008 4648(c.)N
+1115(Board)X
+1390(Quorum.)X
+1774(A)X
+1883(quorum)X
+2222(of)X
+2342(the)X
+2500(Board)X
+2775(is)X
+2879(required)X
+3241(in)X
+3357(order)X
+3601(to)X
+3717(hold)X
+1008 4760(meetings)N
+1382(set)X
+1514(forth)X
+1726(in)X
+1826(Article)X
+2119(4,)X
+2216(Sections)X
+2567(3)X
+2640(and)X
+2804(4,)X
+2901(and)X
+3065(shall)X
+3272(be)X
+3388(a)X
+3456(majority)X
+3808(of)X
+1008 4872(the)N
+1150(Board)X
+1409(members.)X
+1008 5096(d.)N
+1104(Written)X
+1423(Petitions.)X
+1808(All)X
+1955(written)X
+2252(petitions)X
+2608(shall)X
+2814(bear)X
+3005(the)X
+3148(signatures)X
+3563(of)X
+3668(either)X
+1008 5208(ten)N
+1168(\(10\))X
+1370(members,)X
+1789(or)X
+1911(twenty)X
+2215(percent)X
+2540(\(20%\))X
+2821(of)X
+2942(the)X
+3101(voting)X
+3388(membership,)X
+1008 5320(whichever)N
+1433(is)X
+1521(greater.)X
+1008 5544(e.)N
+1108(Member)X
+1468(in)X
+1577(good)X
+1803(standing.)X
+2187(A)X
+2290(member)X
+2640(is)X
+2738(in)X
+2847(good)X
+3073(standing)X
+3433(whose)X
+3712(dues)X
+1008 5656(are)N
+1159(current)X
+1465(and)X
+1636(whose)X
+1913(other)X
+2143(monetary)X
+2539(obligations)X
+2999(to)X
+3106(the)X
+3256(organization)X
+3770(are)X
+1008 5768(not)N
+1155(over)X
+1350(sixty)X
+1561(\(60\))X
+1745(days)X
+1945(in)X
+2044(arrears.)X
+
+2 p
+%%Page: 2 2
+11.00 ps
+12 s 12 xH 0 xS 1 f
+2368 400(-)N
+2424(2)X
+2496(-)X
+1008 688(f.)N
+1097(Voting)X
+1397(member.)X
+1770(A)X
+1873(voting)X
+2153(member)X
+2503(is)X
+2601(a)X
+2678(member)X
+3028(in)X
+3137(good)X
+3363(standing)X
+3723(who)X
+1008 800(has)N
+1176(attended)X
+1543(at)X
+1653(least)X
+1870(one)X
+2049(\(1\))X
+2201(previous)X
+2572(meeting)X
+2923(and)X
+3102(is)X
+3205(an)X
+3335(Activities)X
+3749(Fee)X
+1008 912(paying)N
+1294(student.)X
+1008 1136(g.)N
+1104(Mailing.)X
+1457(A)X
+1550(mailing)X
+1869(may)X
+2059(be)X
+2174(by)X
+2294(physical)X
+2639(or)X
+2743(electronic)X
+3148(means.)X
+1008 1360(h.)N
+1108(Active)X
+1393(Member.)X
+1795(An)X
+1940(active)X
+2199(member)X
+2543(shall)X
+2754(be)X
+2874(a)X
+2946(voting)X
+3221(member)X
+3566(who)X
+3760(has)X
+1008 1472(attended)N
+1362(one)X
+1528(of)X
+1635(the)X
+1780(three)X
+1999(\(3\))X
+2137(previous)X
+2494(regular)X
+2793(organization)X
+3301(meetings)X
+3675(as)X
+3781(set)X
+1008 1584(forth)N
+1219(in)X
+1318(Article)X
+1610(4,)X
+1706(Section)X
+2019(1.)X
+720 1808(Section)N
+1074(2.)X
+1211(Provisional)X
+1714(De\256nitions.)X
+2230(All)X
+2418(terms)X
+2697(not)X
+2885(previously)X
+3356(de\256ned)X
+3704(as)X
+3850(standing)X
+720 1920(De\256nitions)N
+1195(shall)X
+1425(be)X
+1564(de\256ned)X
+1895(according)X
+2323(to)X
+2446(the)X
+2612(current)X
+2933(edition)X
+3249(of)X
+3376(WEBSTER'S)X
+3957(NEW)X
+720 2032(COLLEGIATE)N
+1342(DICTIONARY.)X
+3 f
+16 s
+2066 2288(ARTICLE)N
+2679(III)X
+2004 2432(M)N
+2125(EM)X
+2331(BERSH)X
+2764(IP)X
+1 f
+12 s
+720 2688(Section)N
+1045(1.)X
+1153(Membership.)X
+1699(Each)X
+1929(individual)X
+2357(voting)X
+2640(member)X
+2993(shall)X
+3212(have)X
+3431(one)X
+3607(\(1\))X
+3756(vote.)X
+3983(Each)X
+720 2800(member)N
+1083(shall)X
+1312(receive)X
+1638(one)X
+1824(\(1\))X
+1983(copy)X
+2217(of)X
+2344(any)X
+2530(notices,)X
+2874(publications)X
+3392(or)X
+3519(other)X
+3764(distributed)X
+720 2912(documents)N
+1161(of)X
+1265(the)X
+1407(organization.)X
+720 3136(Section)N
+1033(2.)X
+1129(Becoming)X
+1550(a)X
+1618(Member.)X
+2017(Any)X
+2207(person)X
+2488(whose)X
+2758(dues)X
+2959(have)X
+3166(been)X
+3373(paid)X
+3564(to)X
+3664(the)X
+3807(Treasurer)X
+720 3248(shall)N
+926(be)X
+1041(considered)X
+1482(a)X
+1549(member.)X
+720 3472(Section)N
+1041(3.)X
+1145(Dues.)X
+1398(Membership)X
+1916(dues)X
+2124(for)X
+2268(the)X
+2418(next)X
+2616(year)X
+2814(shall)X
+3028(be)X
+3152(suggested)X
+3564(annually)X
+3929(by)X
+4058(the)X
+720 3584(Executive)N
+1142(Board)X
+1413(in)X
+1524(March,)X
+1835(and)X
+2010(approved)X
+2404(or)X
+2520(changed)X
+2877(by)X
+3008(the)X
+3161(voting)X
+3442(membership)X
+3953(at)X
+4058(the)X
+720 3696(April)N
+956(meeting.)X
+1348(Dues)X
+1578(shall)X
+1793(be)X
+1917(payable)X
+2250(on)X
+2380(or)X
+2494(before)X
+2774(the)X
+2926(thirtieth)X
+3266(day)X
+3439(of)X
+3553(September)X
+3999(each)X
+720 3808(year.)N
+720 4032(Section)N
+1033(4.)X
+1129(Termination.)X
+1654(Memberships)X
+2201(may)X
+2391(be)X
+2506(terminated)X
+2943(voluntarily:)X
+1008 4256(a.)N
+1115(by)X
+1251(resignation.)X
+1743(Any)X
+1948(member)X
+2304(may)X
+2510(resign)X
+2786(from)X
+3014(the)X
+3173(organization)X
+3696(upon)X
+1008 4368(written)N
+1305(notice)X
+1565(to)X
+1664(the)X
+1806(Recording)X
+2231(Secretary.)X
+1008 4592(b.)N
+1154(by)X
+1324(lapsing.)X
+1700(A)X
+1843(membership)X
+2393(will)X
+2617(be)X
+2782(considered)X
+3273(as)X
+3428(lapsed)X
+3749(and)X
+1008 4704 0.2812(automatically)AN
+1562(terminated)X
+2003(if)X
+2090(such)X
+2293(member's)X
+2705(dues)X
+2908(remain)X
+3203(unpaid)X
+3492(thirty)X
+3728(\(30\))X
+1008 4816(days)N
+1229(after)X
+1451(the)X
+1614(deadline)X
+1986(for)X
+2143(payment)X
+2520(of)X
+2646(dues.)X
+2916(However,)X
+3338(the)X
+3502(Executive)X
+1008 4928(Board)N
+1294(may)X
+1511(grant)X
+1760(an)X
+1901(additional)X
+2337(thirty)X
+2596(\(30\))X
+2806(days)X
+3032(grace)X
+3291(period)X
+3587(to)X
+3712(such)X
+1008 5040(delinquent)N
+1458(members)X
+1854(in)X
+1972(exceptional)X
+2460(cases.)X
+2730(In)X
+2853(no)X
+2992(case)X
+3201(may)X
+3410(a)X
+3497(person)X
+3797(be)X
+1008 5152(entitled)N
+1331(to)X
+1439(vote)X
+1637(at)X
+1739(any)X
+1910(organization)X
+2424(meeting)X
+2767(whose)X
+3044(dues)X
+3252(are)X
+3402(unpaid)X
+3696(as)X
+3808(of)X
+1008 5264(the)N
+1164(date)X
+1363(of)X
+1481(that)X
+1664(meeting,)X
+2037(or)X
+2155(who)X
+2359(are)X
+2516(sixty)X
+2742(\(60\))X
+2941(days)X
+3156(in)X
+3270(arrears)X
+3571(of)X
+3690(other)X
+1008 5376(monetary)N
+1396(obligations)X
+1848(to)X
+1947(the)X
+2089(organization.)X
+720 5600(Section)N
+1044(5.)X
+1151(Refund)X
+1469(of)X
+1585(Dues.)X
+1842(Membership)X
+2364(dues)X
+2576(will)X
+2762(not)X
+2921(be)X
+3048(refunded)X
+3426(either)X
+3682(wholly)X
+3985(or)X
+4101(in)X
+720 5712(part)N
+894(for)X
+1030(any)X
+1193(reason)X
+1468(save)X
+1663(extreme)X
+1998(circumstances)X
+2568(as)X
+2672(determined)X
+3130(by)X
+3250(the)X
+3392(membership.)X
+
+3 p
+%%Page: 3 3
+11.00 ps
+12 s 12 xH 0 xS 1 f
+2368 400(-)N
+2424(3)X
+2496(-)X
+720 688(Section)N
+1055(6.)X
+1174(Bene\256ts)X
+1536(of)X
+1663(Membership.)X
+2220(All)X
+2390(members)X
+2790(in)X
+2912(good)X
+3151(standing)X
+3524(shall)X
+3753(recieve)X
+4079(all)X
+720 800(bene\256ts)N
+1043(of)X
+1147(membership)X
+1647(except)X
+1923(as)X
+2027(stipulated)X
+2426(in)X
+2525(the)X
+2667(bylaws.)X
+3 f
+16 s
+2070 1168(ARTICLE)N
+2683(IV)X
+1674 1312(M)N
+1795(EETING)X
+2292(S)X
+2395(AND)X
+2703(VO)X
+(TING)S
+1 f
+12 s
+720 1568(Section)N
+1038(1.)X
+1139(Regular)X
+1473(organization)X
+1984(Meetings.)X
+2395(Regular)X
+2729(meetings)X
+3106(of)X
+3215(the)X
+3362(organization)X
+3873(shall)X
+4085(be)X
+720 1680(held)N
+911(as)X
+1016(directed)X
+1352(by)X
+1473(the)X
+1616(Executive)X
+2027(Board.)X
+2335(Written)X
+2655(notice)X
+2916(of)X
+3020(such)X
+3220(meetings)X
+3592(shall)X
+3798(be)X
+3913(mailed)X
+720 1792(to)N
+823(the)X
+969(membership)X
+1473(at)X
+1571(least)X
+1776(six)X
+1916(\(6\))X
+2056(days)X
+2260(prior)X
+2475(to)X
+2578(the)X
+2724(date)X
+2913(of)X
+3021(the)X
+3167(\256rst)X
+3345(such)X
+3550(meeting)X
+3890(of)X
+3999(each)X
+720 1904(semester)N
+1090(by)X
+1219(the)X
+1369(Corresponding)X
+1972(Secretary)X
+2368(through)X
+2699(the)X
+2849(of\256cial)X
+3154(organization)X
+3668(newsletter)X
+4096(or)X
+720 2016(by)N
+840(other)X
+1062(mailing.)X
+720 2240(Section)N
+1043(2.)X
+1149(Special)X
+1467(organization)X
+1983(Meetings.)X
+2399(Special)X
+2717(meetings)X
+3099(of)X
+3214(the)X
+3367(organization)X
+3884(may)X
+4085(be)X
+720 2352(called)N
+988(by)X
+1121(the)X
+1276(President,)X
+1695(or)X
+1812(by)X
+1945(a)X
+2025(majority)X
+2388(vote)X
+2590(of)X
+2706(the)X
+2860(members)X
+3249(of)X
+3365(the)X
+3519(Executive)X
+3941(Board)X
+720 2464(who)N
+923(are)X
+1079(present)X
+1395(and)X
+1572(voting)X
+1856(at)X
+1964(any)X
+2142(regular)X
+2454(or)X
+2573(special)X
+2880(meeting)X
+3230(of)X
+3349(the)X
+3506(Board,)X
+3804(or)X
+3923(by)X
+4058(the)X
+720 2576(Recording)N
+1152(Secretary)X
+1547(upon)X
+1769(receipt)X
+2062(of)X
+2172(a)X
+2245(written)X
+2548(petition.)X
+2921(Written)X
+3246(notice)X
+3512(of)X
+3622(such)X
+3828(meetings)X
+720 2688(shall)N
+944(be)X
+1077(mailed)X
+1382(by)X
+1520(the)X
+1680(Corresponding)X
+2293(Secretary)X
+2699(at)X
+2811(least)X
+3030(three)X
+3266(\(3\))X
+3421(and)X
+3603(not)X
+3769(more)X
+4010(than)X
+720 2800(\256fteen)N
+992(\(15\))X
+1178(days)X
+1380(prior)X
+1593(to)X
+1694(the)X
+1838(date)X
+2025(of)X
+2131(the)X
+2275(meeting.)X
+2636(Such)X
+2853(notice)X
+3114(shall)X
+3321(state)X
+3523(the)X
+3666(purpose\(s\))X
+4096(of)X
+720 2912(the)N
+862(meeting,)X
+1221(and)X
+1384(no)X
+1504(other)X
+1726(organization)X
+2232(business)X
+2581(may)X
+2771(be)X
+2886(transacted)X
+3301(thereat.)X
+720 3136(Section)N
+1037(3.)X
+1137(Regular)X
+1470(Executive)X
+1884(Board)X
+2148(Meetings.)X
+2559(Regular)X
+2893(meetings)X
+3270(of)X
+3379(the)X
+3526(Executive)X
+3941(Board)X
+720 3248(shall)N
+939(be)X
+1067(held)X
+1270(as)X
+1387(directed)X
+1735(by)X
+1867(the)X
+2021(Board,)X
+2316(with)X
+2523(a)X
+2602(minimum)X
+3013(of)X
+3129(two)X
+3309(\(2\))X
+3457(such)X
+3669(meetings)X
+4053(per)X
+720 3360(semester.)N
+1129(Notice)X
+1410(of)X
+1514(each)X
+1715(such)X
+1915(meeting)X
+2250(shall)X
+2456(be)X
+2571(given)X
+2810(to)X
+2910(the)X
+3053(membership)X
+3554(by)X
+3675(the)X
+3818(President)X
+720 3472(at)N
+824(least)X
+1035(\256ve)X
+1213(\(5\))X
+1359(days)X
+1569(prior)X
+1790(to)X
+1899(the)X
+2051(date)X
+2245(of)X
+2358(the)X
+2509(meeting.)X
+2877(Such)X
+3102(meetings)X
+3483(shall)X
+3698(be)X
+3822(closed)X
+4101(to)X
+720 3584(non-members)N
+1283(of)X
+1397(the)X
+1549(organization)X
+2065(unless)X
+2339(the)X
+2491(individual\(s\))X
+3017(should)X
+3308(be)X
+3434(speci\256cally)X
+3908(invited)X
+720 3696(by)N
+855(the)X
+1012(Board,)X
+1310(in)X
+1424(which)X
+1698(case)X
+1903(the)X
+2059(cause)X
+2311(for)X
+2461(the)X
+2617(non-member)X
+3147(presence)X
+3522(shall)X
+3742(be)X
+3871(the)X
+4027(\256rst)X
+720 3808(order)N
+947(of)X
+1051(business,)X
+1424(and)X
+1587(after)X
+1788(which)X
+2047(the)X
+2189(non-member)X
+2705(may)X
+2895(be)X
+3010(asked)X
+3253(to)X
+3352(leave)X
+3580(the)X
+3722(meeting.)X
+720 4032(Section)N
+1041(4.)X
+1145(Special)X
+1461(Executive)X
+1879(Board)X
+2146(Meetings.)X
+2560(Special)X
+2877(meetings)X
+3258(of)X
+3371(the)X
+3522(Executive)X
+3941(Board)X
+720 4144(may)N
+928(be)X
+1061(called)X
+1333(by)X
+1470(the)X
+1629(President,)X
+2052(or)X
+2173(by)X
+2310(the)X
+2469(Recording)X
+2911(Secretary)X
+3316(upon)X
+3549(the)X
+3708(receipt)X
+4012(of)X
+4133(a)X
+720 4256(written)N
+1038(petition)X
+1378(signed)X
+1675(by)X
+1817(at)X
+1933(least)X
+2156(three)X
+2395(\(3\))X
+2553(members)X
+2952(of)X
+3078(the)X
+3242(Board.)X
+3571(Notice)X
+3874(of)X
+4000(such)X
+720 4368(meetings)N
+1106(shall)X
+1326(be)X
+1455(given)X
+1706(to)X
+1818(the)X
+1973(membership)X
+2486(at)X
+2593(least)X
+2807(\256ve)X
+2988(\(5\))X
+3137(days)X
+3350(prior)X
+3574(to)X
+3686(the)X
+3841(meeting.)X
+720 4480(Such)N
+963(notice)X
+1250(shall)X
+1483(state)X
+1711(the)X
+1880(purpose)X
+2236(of)X
+2368(the)X
+2538(meeting)X
+2901(and)X
+3092(no)X
+3240(other)X
+3490(business)X
+3867(may)X
+4085(be)X
+720 4592(transacted)N
+1145(thereat.)X
+1490(In)X
+1604(addition,)X
+1977(all)X
+2107(restrictions)X
+2568(in)X
+2676(Section)X
+2998(3)X
+3079(of)X
+3192(this)X
+3364(article)X
+3639(shall)X
+3854(apply)X
+4101(to)X
+720 4704(special)N
+1012(meetings)X
+1384(of)X
+1488(the)X
+1630(Board.)X
+720 4928(Section)N
+1034(5.)X
+1131(Emergency)X
+1595(Board)X
+1855(Meetings.)X
+2286(Emergency)X
+2751(meetings)X
+3125(of)X
+3231(the)X
+3375(Board)X
+3636(may)X
+3828(be)X
+3945(called)X
+720 5040(by)N
+859(the)X
+1020(President)X
+1421(or)X
+1544(First)X
+1763(Vice-President)X
+2378(and)X
+2560(may)X
+2769(be)X
+2903(held)X
+3112(by)X
+3251(phone.)X
+3577(Notice)X
+3877(of)X
+4000(such)X
+720 5152(meetings)N
+1105(shall)X
+1324(be)X
+1452(given)X
+1703(to)X
+1815(the)X
+1970(of\256cers)X
+2295(at)X
+2402(least)X
+2616(one)X
+2793(\(1\))X
+2943(day)X
+3120(prior)X
+3345(to)X
+3458(the)X
+3614(meeting.)X
+4011(Any)X
+720 5264(majority)N
+1089(decision)X
+1452(reached)X
+1794(will)X
+1986(be)X
+2119(entered)X
+2444(into)X
+2635(the)X
+2794(minutes)X
+3140(of)X
+3261(the)X
+3420(next)X
+3627(regular)X
+3941(Board)X
+720 5376(meeting.)N
+720 5600(Section)N
+1043(6.)X
+1149(Voting.)X
+1474(Each)X
+1701(voting)X
+1981(member)X
+2331(shall)X
+2547(be)X
+2672(entitled)X
+2996(to)X
+3105(one)X
+3278(\(1\))X
+3424(vote)X
+3624(at)X
+3729(any)X
+3903(regular)X
+720 5712(meeting)N
+1069(of)X
+1187(the)X
+1343(organization)X
+1862(at)X
+1969(which)X
+2241(the)X
+2396(member)X
+2749(is)X
+2850(present.)X
+3189(Proxy)X
+3455(voting)X
+3738(will)X
+3925(not)X
+4085(be)X
+720 5824(permitted)N
+1123(at)X
+1226(any)X
+1398(organization)X
+1914(meeting)X
+2259(or)X
+2373(election)X
+2713(excepting)X
+3122(extenuating)X
+3606(circumstances,)X
+
+4 p
+%%Page: 4 4
+11.00 ps
+12 s 12 xH 0 xS 1 f
+2368 400(-)N
+2424(4)X
+2496(-)X
+720 688(in)N
+823(which)X
+1086(case)X
+1280(the)X
+1425(proxy)X
+1676(must)X
+1890(be)X
+2008(counter-signed)X
+2607(by)X
+2730(either)X
+2977(the)X
+3122(President)X
+3507(or)X
+3614(the)X
+3759(First)X
+3962(Vice-)X
+720 800(President.)N
+3 f
+16 s
+2095 1056(ARTICLE)N
+2708(V)X
+1335 1200(O)N
+1435(FFICERS)X
+2013(AND)X
+2321 -0.3438(REPRESENTATIVES)AX
+1 f
+12 s
+720 1456(Section)N
+1068(1.)X
+1199(Executive)X
+1644(Board.)X
+1963(The)X
+2173(of\256cers)X
+2521(of)X
+2661(the)X
+2839(organization)X
+3381(shall)X
+3623(constitute)X
+4058(the)X
+720 1568(Executive)N
+1132(board.)X
+1425(The)X
+1601(power)X
+1867(necessary)X
+2267(for)X
+2405(the)X
+2549(general)X
+2859(management)X
+3377(of)X
+3482(the)X
+3625(organization's)X
+720 1680(affairs)N
+990(shall)X
+1196(be)X
+1311(entrusted)X
+1688(to)X
+1787(the)X
+1929(Board,)X
+2212(except)X
+2488(as)X
+2592(follows.)X
+1008 1904(a.)N
+1099(The)X
+1273(Board)X
+1532(shall)X
+1738(be)X
+1853(subject)X
+2150(to)X
+2249(the)X
+2391(orders)X
+2655(of)X
+2759(the)X
+2901(organization,)X
+3432(and)X
+3596(none)X
+3808(of)X
+1008 2016(its)N
+1152(acts)X
+1355(shall)X
+1590(con\257ict)X
+1931(with)X
+2154(action)X
+2442(taken)X
+2703(by)X
+2851(the)X
+3021(organization,)X
+3579(and)X
+3770(the)X
+1008 2128(organization)N
+1528(may)X
+1732(countermand)X
+2273(any)X
+2450(decision)X
+2810(of)X
+2929(the)X
+3086(board)X
+3344(by)X
+3479(a)X
+3561(majority)X
+1008 2240(vote,)N
+1222(thus)X
+1406(opening)X
+1740(up)X
+1860(the)X
+2002(question)X
+2352(for)X
+2488(consideration)X
+3031(by)X
+3151(the)X
+3293(organization.)X
+1008 2464(b.)N
+1135(The)X
+1340(board)X
+1614(shall)X
+1851(not)X
+2030(distribute)X
+2450(the)X
+2624(organization's)X
+3231(funds)X
+3500(except)X
+3808(as)X
+1008 2576(directed)N
+1343(by)X
+1463(the)X
+1605(organization.)X
+720 2800(Section)N
+1040(2.)X
+1143(Of\256cers.)X
+1507(The)X
+1688(organization)X
+2201(of\256cers,)X
+2544(consisting)X
+2965(of)X
+3076(the)X
+3225(following,)X
+3654(shall)X
+3867(serve)X
+4101(in)X
+720 2912(their)N
+929(respective)X
+1352(capacities)X
+1765(both)X
+1968(with)X
+2171(regard)X
+2449(to)X
+2555(the)X
+2704(organization)X
+3217(and)X
+3387(its)X
+3509(meetings)X
+3888(and)X
+4058(the)X
+720 3024(Board)N
+979(and)X
+1142(its)X
+1257(meetings.)X
+1008 3248(a.)N
+1099(The)X
+1273(President)X
+1655(shall)X
+1861(preside)X
+2163(at)X
+2257(all)X
+2378(meetings)X
+2750(of)X
+2854(the)X
+2996(organization)X
+3502(and)X
+3665(of)X
+3770(the)X
+1008 3360(Board,)N
+1305(and)X
+1482(shall)X
+1702(have)X
+1922(the)X
+2078(duties)X
+2346(and)X
+2523(powers)X
+2838(normally)X
+3224(applicable)X
+3658(to)X
+3770(the)X
+1008 3472(of\256ce)N
+1251(of)X
+1355(President)X
+1737(in)X
+1836(addition)X
+2176(to)X
+2275(these)X
+2497(Bylaws.)X
+1008 3696(b.)N
+1111(The)X
+1292(First)X
+1499(Vice-President)X
+2102(shall)X
+2316(have)X
+2530(the)X
+2680(duties)X
+2942(and)X
+3113(exercise)X
+3461(the)X
+3611(powers)X
+1008 3808(of)N
+1112(the)X
+1254(President)X
+1636(in)X
+1735(case)X
+1925(of)X
+2029(the)X
+2171(President's)X
+2622(death,)X
+2879(absence,)X
+3232(or)X
+3336(incapacity.)X
+1008 4032(c.)N
+1111(The)X
+1297(Second)X
+1616(Vice-President)X
+2224(shall)X
+2442(be)X
+2569(in)X
+2680(charge)X
+2973(of)X
+3089(fellowship)X
+3531(and)X
+3706(shall)X
+1008 4144(actively)N
+1338(recruit)X
+1614(new)X
+1798(members)X
+2175(and)X
+2338(organize)X
+2694(fellowship)X
+3124(activities.)X
+1008 4368(d.)N
+1123(The)X
+1316(Recording)X
+1760(Secretary)X
+2167(shall)X
+2392(keep)X
+2617(a)X
+2703(record)X
+2992(of)X
+3115(all)X
+3255(meetings)X
+3646(of)X
+3770(the)X
+1008 4480(organization)N
+1515(and)X
+1679(of)X
+1784(the)X
+1927(Board)X
+2187(and)X
+2351(of)X
+2456(all)X
+2578(matters)X
+2887(of)X
+2992(which)X
+3252(a)X
+3320(record)X
+3591(shall)X
+3797(be)X
+1008 4592(ordered)N
+1333(by)X
+1460(the)X
+1609(organization.)X
+2170(The)X
+2351(Recording)X
+2783(Secretary)X
+3203(keep)X
+3417(a)X
+3492(roll)X
+3658(of)X
+3770(the)X
+1008 4704(members)N
+1399(of)X
+1517(the)X
+1673(organization)X
+2193(with)X
+2402(applicable)X
+2837(information,)X
+3354(and)X
+3530(carry)X
+3765(out)X
+1008 4816(such)N
+1208(other)X
+1430(duties)X
+1684(as)X
+1788(are)X
+1930(prescribed)X
+2355(in)X
+2454(these)X
+2676(Bylaws.)X
+1008 5040(e.)N
+1111(The)X
+1297(Corresponding)X
+1904(Secretary)X
+2304(shall)X
+2522(have)X
+2740(charge)X
+3033(of)X
+3150(all)X
+3284(correspondence)X
+1008 5152(pertinent)N
+1389(to)X
+1502(the)X
+1658(organization)X
+2178(other)X
+2414(than)X
+2617(the)X
+2772(correspondence)X
+3413(reserved)X
+3776(for)X
+1008 5264(the)N
+1150(Recording)X
+1575(Secretary)X
+1964(and)X
+2128(Treasurer.)X
+2546(The)X
+2721(Corresponding)X
+3317(Secretary)X
+3706(shall)X
+1008 5376(be)N
+1123(the)X
+1265(Editor)X
+1530(of)X
+1634(the)X
+1776(organization)X
+2282(Newsletter.)X
+1008 5600(f.)N
+1095(The)X
+1276(Treasurer)X
+1676(shall)X
+1889(collect)X
+2178(and)X
+2348(receive)X
+2658(all)X
+2786(moneys)X
+3116(due)X
+3286(or)X
+3397(belonging)X
+3813(to)X
+1008 5712(the)N
+1160(organization,)X
+1700(and)X
+1873(shall)X
+2088(deposit)X
+2399(the)X
+2550(same)X
+2781(in)X
+2889(a)X
+2965(bank)X
+3185(satisfactory)X
+3662(to)X
+3770(the)X
+1008 5824(Board,)N
+1305(in)X
+1418(the)X
+1574(name)X
+1821(of)X
+1940(the)X
+2097(organization.)X
+2642(The)X
+2831(Treasurer's)X
+3308(books)X
+3576(shall)X
+3797(be)X
+
+5 p
+%%Page: 5 5
+11.00 ps
+12 s 12 xH 0 xS 1 f
+2368 400(-)N
+2424(5)X
+2496(-)X
+1008 688(open)N
+1231(at)X
+1337(all)X
+1470(times)X
+1715(to)X
+1826(the)X
+1980(inspection)X
+2412(of)X
+2528(the)X
+2681(Board,)X
+2975(and)X
+3149(the)X
+3302(Treasurer)X
+3706(shall)X
+1008 800(report)N
+1282(to)X
+1401(the)X
+1563(Board)X
+1843(and)X
+2027(the)X
+2190(general)X
+2519(membership)X
+3040(at)X
+3155(every)X
+3414(meeting)X
+3770(the)X
+1008 912(condition)N
+1428(of)X
+1564(the)X
+1738(organization's)X
+2345(\256nances.)X
+2740(At)X
+2892(the)X
+3066(annual)X
+3379(meeting,)X
+3770(the)X
+1008 1024(Treasurer)N
+1415(shall)X
+1635(render)X
+1919(an)X
+2048(account)X
+2386(of)X
+2504(all)X
+2639(moneys)X
+2976(received)X
+3341(and)X
+3519(expended)X
+1008 1136(during)N
+1314(the)X
+1486(previous)X
+1871(\256scal)X
+2128(year.)X
+2372(During)X
+2698(the)X
+2870(month)X
+3170(of)X
+3304(September)X
+3770(the)X
+1008 1248(Treasurer)N
+1409(shall)X
+1623(send)X
+1831(to)X
+1938(each)X
+2147(member)X
+2495(a)X
+2570(statement)X
+2972(of)X
+3084(dues)X
+3293(for)X
+3438(the)X
+3589(ensuing)X
+1008 1360(year.)N
+1245(The)X
+1442(Treasurer)X
+1858(shall)X
+2087(disperse)X
+2449(funds)X
+2709(as)X
+2836(directed)X
+3194(by)X
+3337(the)X
+3502(Executive)X
+1008 1472(Board)N
+1267(and)X
+1430(all)X
+1551(checks)X
+1838(must)X
+2050(be)X
+2166(signed)X
+2442(by)X
+2563(two)X
+2732(\(2\))X
+2869(of\256cers)X
+3182(of)X
+3287(the)X
+3430(Board.)X
+3738(The)X
+1008 1584(Treasurer)N
+1405(shall)X
+1615(also)X
+1798(be)X
+1917(responsible)X
+2383(for)X
+2523(\256ling)X
+2754(all)X
+2879(\256nancial)X
+3239(forms)X
+3491(applicable)X
+1008 1696(to)N
+1107(the)X
+1249(organization.)X
+1008 1920(g.)N
+1111(The)X
+1292(Sergeant-at-Arms)X
+2007(shall)X
+2220(assist)X
+2459(in)X
+2565(preserving)X
+3002(order)X
+3236(as)X
+3347(the)X
+3497(chair)X
+3722(may)X
+1008 2032(direct,)N
+1276(and)X
+1439(other)X
+1661(duties)X
+1915(as)X
+2019(set)X
+2150(forth)X
+2361(in)X
+2460(the)X
+2602(standing)X
+2952(rules)X
+3163(of)X
+3267(order.)X
+720 2256(Section)N
+1045(3.)X
+1153(Of\256cer)X
+1461(Requirements.)X
+2056(All)X
+2215(Of\256cers)X
+2560(of)X
+2676(the)X
+2830(organization)X
+3348(shall)X
+3566(be)X
+3694(organization)X
+720 2368(voting)N
+990(members)X
+1367(in)X
+1466(good)X
+1682(standing.)X
+720 2592(Section)N
+1039(4.)X
+1141(Vacancies.)X
+1591(Any)X
+1786(vacancy)X
+2132(of)X
+2242(an)X
+2363(of\256cer)X
+2644(position)X
+2984(occurring)X
+3383(on)X
+3510(the)X
+3659(Board)X
+3925(during)X
+720 2704(the)N
+879(year)X
+1086(shall)X
+1309(be)X
+1440(\256lled)X
+1678(for)X
+1830(the)X
+1988(unexpired)X
+2413(term)X
+2630(of)X
+2750(of\256ce)X
+3009(by)X
+3145(a)X
+3228(majority)X
+3595(vote)X
+3801(of)X
+3921(all)X
+4058(the)X
+720 2816(remaining)N
+1143(members)X
+1528(of)X
+1640(the)X
+1790(Board)X
+2057(by)X
+2185(the)X
+2336(second)X
+2636(regular)X
+2942(meeting)X
+3286(of)X
+3399(the)X
+3550(board)X
+3802(following)X
+720 2928(the)N
+862(creation)X
+1197(of)X
+1301(such)X
+1501(vacancy.)X
+720 3152(Section)N
+1040(5.)X
+1143(Recall)X
+1421(of)X
+1532(Of\256cers.)X
+1896(Any)X
+2092(of\256cer)X
+2374(may)X
+2571(be)X
+2693(recalled)X
+3031(for)X
+3175(misconduct)X
+3651(or)X
+3763(dereliction)X
+720 3264(of)N
+851(duty.)X
+1097(A)X
+1217(written)X
+1541(petition,)X
+1911(stating)X
+2219(the)X
+2388(reason\(s\))X
+2791(for)X
+2954(recall,)X
+3243(shall)X
+3475(be)X
+3616(\256led)X
+3837(with)X
+4058(the)X
+720 3376(Recording)N
+1146(Secretary.)X
+1559(Written)X
+1879(notice)X
+2140(of)X
+2245(such)X
+2446(petition)X
+2766(shall)X
+2973(be)X
+3089(included)X
+3446(in)X
+3546(the)X
+3690(notice)X
+3952(of)X
+4058(the)X
+720 3488(next)N
+924(regular)X
+1235(meeting)X
+1584(of)X
+1702(the)X
+1858(organization.)X
+2402(A)X
+2508(hearing)X
+2834(on)X
+2967(the)X
+3122(matter)X
+3406(will)X
+3593(be)X
+3721(held)X
+3924(at)X
+4031(that)X
+720 3600(meeting,)N
+1090(and)X
+1264(a)X
+1342(two-thirds)X
+1772(\(2/3\))X
+1994(vote)X
+2195(of)X
+2310(the)X
+2463(voting)X
+2744(members)X
+3132(present)X
+3445(and)X
+3619(voting)X
+3900(will)X
+4085(be)X
+720 3712(required)N
+1065(to)X
+1164(sustain)X
+1455(the)X
+1597(recall.)X
+720 3936(Section)N
+1059(6.)X
+1181(Seniority.)X
+1608(Seniority)X
+2011(of)X
+2141(of\256ces)X
+2447(is:)X
+2588(President,)X
+3020(First)X
+3246(Vice-President,)X
+3893(Second)X
+720 4048(Vice-President,)N
+1340(Recording)X
+1765(Secretary,)X
+2177(Treasurer,)X
+2594(and)X
+2757(Sergeant-at-Arms.)X
+3 f
+16 s
+2070 4304(ARTICLE)N
+2683(VI)X
+1091 4448(O)N
+1191(RG)X
+(ANIZATIO)S
+2029(N)X
+2153(YEAR,)X
+2578(ANNUAL)X
+3155(M)X
+3276(EETING)X
+3773(,)X
+2075 4592(ELECTIO)N
+2657(NS)X
+1 f
+12 s
+720 4848(Section)N
+1040(1.)X
+1143(Organization)X
+1677(Year.)X
+1920(The)X
+2102(organization's)X
+2685(\256scal)X
+2920(year)X
+3118(shall)X
+3332(begin)X
+3578(on)X
+3706(the)X
+3856(\256rst)X
+4037(day)X
+720 4960(of)N
+833(September)X
+1278(and)X
+1450(end)X
+1622(on)X
+1751(the)X
+1902(thirty-\256rst)X
+2324(day)X
+2495(of)X
+2607(August.)X
+2940(The)X
+3122(organization's)X
+3705(of\256cial)X
+4010(year)X
+720 5072(shall)N
+929(begin)X
+1171(immediately)X
+1682(at)X
+1780(the)X
+1926(conclusion)X
+2371(of)X
+2479(the)X
+2625(election)X
+2959(at)X
+3057(the)X
+3203(annual)X
+3488(meeting)X
+3827(and)X
+3994(shall)X
+720 5184(continue)N
+1076(through)X
+1399(the)X
+1541(election)X
+1871(at)X
+1965(the)X
+2107(next)X
+2297(annual)X
+2578(meeting.)X
+720 5408(Section)N
+1036(2.)X
+1135(Annual)X
+1445(Meeting.)X
+1817(No)X
+1962(later)X
+2162(than)X
+2356(the)X
+2502(last)X
+2664(meeting)X
+3003(in)X
+3106(the)X
+3252(month)X
+3526(of)X
+3634(December)X
+4058(the)X
+720 5520(board)N
+967(shall)X
+1177(set)X
+1312(the)X
+1458(date)X
+1647(for)X
+1786(the)X
+1931(Annual)X
+2241(Meeting.)X
+2637(The)X
+2814(annual)X
+3098(meeting)X
+3436(shall)X
+3645(be)X
+3763(held)X
+3956(in)X
+4058(the)X
+720 5632(month)N
+1000(of)X
+1114(April)X
+1351(of)X
+1465(each)X
+1676(year.)X
+1924(At)X
+2054(the)X
+2206(Annual)X
+2523(Meeting)X
+2879(the)X
+3032(Of\256cers)X
+3376(for)X
+3523(the)X
+3676(ensuing)X
+4010(year)X
+720 5744(shall)N
+928(be)X
+1045(elected)X
+1345(by)X
+1467(secret,)X
+1742(written)X
+2041(ballot)X
+2287(from)X
+2499(among)X
+2786(those)X
+3014(nominated)X
+3446(in)X
+3546(accordance)X
+4005(with)X
+720 5856(Section)N
+1042(4)X
+1123(of)X
+1236(this)X
+1408(article.)X
+1707(They)X
+1938(shall)X
+2153(take)X
+2347(of\256ce)X
+2599(immediately)X
+3115(upon)X
+3341(the)X
+3493(conclusion)X
+3944(of)X
+4058(the)X
+
+6 p
+%%Page: 6 6
+11.00 ps
+12 s 12 xH 0 xS 1 f
+2368 400(-)N
+2424(6)X
+2496(-)X
+720 688(election)N
+1051(and)X
+1214(each)X
+1415(retiring)X
+1723(of\256cer)X
+1998(shall)X
+2204(relinquish)X
+2613(all)X
+2734(properties)X
+3143(and)X
+3306(records)X
+3613(relating)X
+3932(to)X
+4031(that)X
+720 800(of\256ce)N
+963(within)X
+1233(\256fteen)X
+1503(\(15\))X
+1687(days)X
+1887(after)X
+2088(the)X
+2230(election.)X
+720 1024(Section)N
+1039(3.)X
+1141(Elections.)X
+1554(The)X
+1734(nominated)X
+2171(candidate)X
+2571(receiving)X
+2960(a)X
+3033(majority)X
+3390(of)X
+3500(the)X
+3649(votes)X
+3883(cast)X
+4064(for)X
+720 1136(each)N
+934(of\256ce)X
+1190(shall)X
+1409(be)X
+1537(declared)X
+1901(elected.)X
+2236(If)X
+2336(there)X
+2565(are)X
+2719(three)X
+2948(\(3\))X
+3096(or)X
+3212(more)X
+3446(candidates)X
+3889(for)X
+4037(any)X
+720 1248(single)N
+974(of\256ce,)X
+1241(and)X
+1404(no)X
+1524(candidate)X
+1918(receives)X
+2258(a)X
+2325(majority)X
+2676(of)X
+2780(the)X
+2922(vote,)X
+3136(the)X
+3279(candidate)X
+3674(receiving)X
+4058(the)X
+720 1360(fewest)N
+1004(votes)X
+1240(will)X
+1423(be)X
+1547(deleted)X
+1859(from)X
+2078(the)X
+2228(ballot)X
+2480(and)X
+2651(the)X
+2801(voting)X
+3079(membership)X
+3587(will)X
+3769(vote)X
+3967(again)X
+720 1472(on)N
+840(the)X
+982(remaining)X
+1397(candidates)X
+1828(until)X
+2029(a)X
+2096(majority)X
+2447(has)X
+2599(been)X
+2805(declared.)X
+720 1696(Section)N
+1040(4.)X
+1143(Nominations.)X
+1695(No)X
+1843(person)X
+2131(may)X
+2329(be)X
+2452(a)X
+2527(candidate)X
+2929(in)X
+3036(an)X
+3159(organization)X
+3673(election)X
+4011(who)X
+720 1808(has)N
+883(not)X
+1041(been)X
+1258(nominated)X
+1700(or)X
+1814(who)X
+2013(is)X
+2111(not)X
+2268(a)X
+2345(voting)X
+2625(organization)X
+3141(member)X
+3491(in)X
+3600(good)X
+3826(standing.)X
+720 1920(During)N
+1019(the)X
+1164(last)X
+1325(quarter)X
+1625(of)X
+1732(the)X
+1877(of\256cial)X
+2177(year)X
+2370(the)X
+2515(Executive)X
+2928(Board)X
+3190(shall)X
+3399(select)X
+3646(a)X
+3716(Nominating)X
+720 2032(Committee)N
+1176(consisting)X
+1593(of)X
+1700(three)X
+1920(\(3\))X
+2059(members)X
+2439(and)X
+2605(two)X
+2776(\(2\))X
+2914(alternates,)X
+3334(not)X
+3483(more)X
+3707(than)X
+3899(one)X
+4064(\(1\))X
+720 2144(of)N
+835(whom)X
+1111(shall)X
+1329(be)X
+1456(a)X
+1535(member)X
+1887(of)X
+2003(the)X
+2157(Board.)X
+2452(The)X
+2638(Recording)X
+3075(Secretary)X
+3475(shall)X
+3693(immediately)X
+720 2256(notify)N
+979(the)X
+1126(committee)X
+1563(members)X
+1945(and)X
+2113(alternates)X
+2512(of)X
+2621(their)X
+2826(selection.)X
+3245(The)X
+3423(Board)X
+3686(shall)X
+3896(name)X
+4133(a)X
+720 2368(Chairperson)N
+1231(for)X
+1384(the)X
+1543(committee)X
+1992(and)X
+2172(it)X
+2267(shall)X
+2490(be)X
+2623(this)X
+2804(person's)X
+3171(duty)X
+3384(to)X
+3501(call)X
+3683(a)X
+3768(committee)X
+720 2480(meeting)N
+1055(which)X
+1314(shall)X
+1520(be)X
+1635(held)X
+1825(on)X
+1945(or)X
+2049(before)X
+2319(March)X
+2594(1.)X
+1008 2704(a.)N
+1101(The)X
+1277(committee)X
+1711(shall)X
+1919(nominate)X
+2304(at)X
+2400(least)X
+2603(one)X
+2768(\(1\))X
+2906(candidate)X
+3302(for)X
+3441(each)X
+3645(of\256ce,)X
+1008 2816(and)N
+1209(after)X
+1448(securing)X
+1836(the)X
+2016(consent)X
+2372(of)X
+2513(each)X
+2751(person)X
+3068(so)X
+3214(nominated,)X
+3706(shall)X
+1008 2928(immediately)N
+1567(report)X
+1873(their)X
+2126(nominations)X
+2678(to)X
+2829(both)X
+3076(the)X
+3271(Recording)X
+3749(and)X
+1008 3040(Corresponding)N
+1603(Secretaries)X
+2050(in)X
+2149(writing.)X
+1008 3264(b.)N
+1105(Upon)X
+1344(receipt)X
+1633(of)X
+1739(the)X
+1883(Nominating)X
+2369(Committee's)X
+2893(report,)X
+3173(the)X
+3317(Corresponding)X
+1008 3376(Secretary)N
+1400(shall)X
+1610(on)X
+1734(or)X
+1842(before)X
+2116(April)X
+2347(1,)X
+2447(notify)X
+2705(each)X
+2910(member)X
+3254(in)X
+3357(writing)X
+3663(of)X
+3770(the)X
+1008 3488(candidates)N
+1439(so)X
+1548(nominated.)X
+1008 3712(c.)N
+1102(Additional)X
+1541(nominations)X
+2045(may)X
+2239(be)X
+2358(made)X
+2595(at)X
+2693(any)X
+2860(meeting)X
+3199(after)X
+3404(the)X
+3550(report)X
+3808(of)X
+1008 3824(the)N
+1156(nominating)X
+1625(committee)X
+2063(and)X
+2231(before)X
+2506(the)X
+2653(annual)X
+2939(meeting)X
+3279(by)X
+3404(any)X
+3572(member)X
+1008 3936(in)N
+1129(attendance)X
+1588(provided)X
+1976(that)X
+2167(the)X
+2331(person)X
+2633(so)X
+2764(nominated)X
+3217(does)X
+3439(not)X
+3609(decline)X
+1008 4048(when)N
+1270(his)X
+1436(or)X
+1570(her)X
+1747(name)X
+2010(is)X
+2128(proposed,)X
+2558(and)X
+2750(provided)X
+3145(further)X
+3460(that)X
+3658(if)X
+3770(the)X
+1008 4160(proposed)N
+1387(candidate)X
+1784(is)X
+1875(not)X
+2025(in)X
+2127(attendance)X
+2568(at)X
+2666(this)X
+2833(meeting,)X
+3196(the)X
+3342(proposer)X
+3706(shall)X
+1008 4272(present)N
+1319(to)X
+1426(the)X
+1576(Recording)X
+2009(Secretary)X
+2405(a)X
+2480(written)X
+2785(statement)X
+3187(of)X
+3299(the)X
+3449(candidate's)X
+1008 4384(willingness)N
+1473(to)X
+1575(be)X
+1693(so)X
+1805(nominated.)X
+2287(A)X
+2383(voting)X
+2657(member)X
+3001(may)X
+3195(be)X
+3314(nominated)X
+3749(and)X
+1008 4496(run)N
+1164(for)X
+1304(more)X
+1530(than)X
+1724(one)X
+1891(\(1\))X
+2031(of\256ce,)X
+2302(but)X
+2453(shall)X
+2662(only)X
+2860(be)X
+2978(allowed)X
+3310(to)X
+3412(hold)X
+3610(one)X
+3776(\(1\))X
+1008 4608(of\256ce.)N
+1008 4832(d.)N
+1114(Nominations)X
+1645(cannot)X
+1936(be)X
+2061(made)X
+2304(at)X
+2409(the)X
+2562(annual)X
+2854(meeting)X
+3200(or)X
+3315(in)X
+3425(any)X
+3599(manner)X
+1008 4944(other)N
+1230(than)X
+1420(as)X
+1524(provided)X
+1890(for)X
+2026(in)X
+2125(this)X
+2288(section.)X
+3 f
+16 s
+2045 5200(ARTICLE)N
+2658(VII)X
+2000 5344(CO)N
+(M)S
+2313(M)X
+2434(ITTEES)X
+
+7 p
+%%Page: 7 7
+11.00 ps
+16 s 16 xH 0 xS 3 f
+12 s
+1 f
+2368 432(-)N
+2424(7)X
+2496(-)X
+720 688(Section)N
+1034(1.)X
+1131(The)X
+1306(Board)X
+1566(may)X
+1757(each)X
+1959(year)X
+2150(appoint)X
+2464(standing)X
+2815(committees)X
+3286(to)X
+3387(advance)X
+3729(the)X
+3873(work)X
+4096(of)X
+720 800(the)N
+876(organization.)X
+1419(Special)X
+1740(committees)X
+2222(may)X
+2425(also)X
+2617(be)X
+2745(appointed)X
+3162(by)X
+3295(the)X
+3450(Board)X
+3722(to)X
+3834(aid)X
+3989(it)X
+4080(on)X
+720 912(particular)N
+1120(projects.)X
+1479(Such)X
+1701(committees)X
+2176(shall)X
+2388(always)X
+2685(be)X
+2807(subject)X
+3111(to)X
+3217(the)X
+3366(\256nal)X
+3568(authority)X
+3947(of)X
+4058(the)X
+720 1024(Board.)N
+720 1248(Section)N
+1047(2.)X
+1157(Any)X
+1360(committee)X
+1806(appointment)X
+2326(may)X
+2530(be)X
+2659(terminated)X
+3110(by)X
+3244(the)X
+3400(Board)X
+3673(upon)X
+3903(written)X
+720 1360(notice)N
+992(to)X
+1103(the)X
+1257(appointee,)X
+1692(and)X
+1867(the)X
+2020(Board)X
+2290(may)X
+2491(appoint)X
+2815(successors)X
+3255(to)X
+3365(those)X
+3603(persons)X
+3931(whose)X
+720 1472(services)N
+1054(have)X
+1260(been)X
+1466(terminated.)X
+3 f
+16 s
+2020 1728(ARTICLE)N
+2633(VIII)X
+1059 1872(REPRIM)N
+1577(AND,)X
+1917(SUSPENSIO)X
+2627(N,)X
+2783(AND)X
+3091(EXPULSIO)X
+3744(N)X
+1 f
+12 s
+720 2128(Section)N
+1045(1.)X
+1153(Any)X
+1354(member)X
+1707(of)X
+1824(the)X
+1979(organization)X
+2498(shall)X
+2717(be)X
+2845(held)X
+3048(accountable)X
+3546(for)X
+3695(any)X
+3871(conduct)X
+720 2240(considered)N
+1175(injurious)X
+1555(to)X
+1668(the)X
+1824(organization)X
+2344(or)X
+2462(its)X
+2591(purposes)X
+2970(and)X
+3147(objectives.)X
+3599(The)X
+3786(gravity)X
+4096(of)X
+720 2352(such)N
+956(conduct)X
+1321(shall)X
+1563(\256rst)X
+1772(be)X
+1923(considered)X
+2400(at)X
+2530(a)X
+2634(hearing)X
+2984(before)X
+3291(the)X
+3470(Executive)X
+3917(Board.)X
+720 2464(Considering)N
+1219(said)X
+1403(charges)X
+1725(of)X
+1833(conduct,)X
+2190(the)X
+2336(Board)X
+2599(may,)X
+2817(at)X
+2915(its)X
+3034(discretion,)X
+3466(enforce)X
+3783(any)X
+3950(of)X
+4058(the)X
+720 2576(following)N
+1118(punitive)X
+1458(actions:)X
+1008 2800(a.)N
+1104(Reprimand.)X
+1585(The)X
+1764(Board)X
+2028(may)X
+2223(reprimand)X
+2648(the)X
+2796(member)X
+3142(for)X
+3284(minor)X
+3544(offenses,)X
+1008 2912(which)N
+1278(can)X
+1447(include,)X
+1790(but)X
+1947(shall)X
+2163(not)X
+2320(be)X
+2445(limited)X
+2753(to,)X
+2886(written)X
+3193(reprimand,)X
+3647(verbal)X
+1008 3024(warning,)N
+1371(restitution,)X
+1810(or)X
+1914(organization)X
+2420(service.)X
+1008 3248(b.)N
+1127(Suspension.)X
+1635(For)X
+1815(offenses)X
+2182(of)X
+2309(a)X
+2399(more)X
+2644(serious)X
+2963(nature,)X
+3275(the)X
+3440(Board)X
+3722(may)X
+1008 3360(suspend)N
+1348(membership)X
+1855(privileges)X
+2266(of)X
+2377(the)X
+2526(member)X
+2873(for)X
+3016(any)X
+3185(length)X
+3456(of)X
+3566(time,)X
+3792(up)X
+1008 3472(to)N
+1107(the)X
+1249(next)X
+1439(Annual)X
+1746(Meeting)X
+2091(of)X
+2195(the)X
+2337(organization.)X
+1008 3696(c.)N
+1113(Expulsion.)X
+1565(Considering)X
+2073(the)X
+2229(most)X
+2454(heinous)X
+2791(of)X
+2909(offenses,)X
+3291(the)X
+3448(Board)X
+3722(may)X
+1008 3808(propose)N
+1353(to)X
+1469(the)X
+1628(organization)X
+2150(membership)X
+2666(expulsion)X
+3080(of)X
+3200(the)X
+3358(member.)X
+3738(The)X
+1008 3920(organization)N
+1560(shall)X
+1812(then)X
+2048(vote)X
+2284(at)X
+2425(the)X
+2614(next)X
+2851(Regular)X
+3227(Meeting)X
+3619(of)X
+3770(the)X
+1008 4032(organization,)N
+1548(and)X
+1721(the)X
+1873(proposal)X
+2238(for)X
+2384(expulsion)X
+2792(shall)X
+3008(require)X
+3314(the)X
+3465(af\256rmative)X
+1008 4144(vote)N
+1212(of)X
+1331(at)X
+1440(least)X
+1656(a)X
+1738(two-thirds)X
+2172(\(2/3\))X
+2398(majority)X
+2764(of)X
+2883(the)X
+3040(members)X
+3432(present)X
+3749(and)X
+1008 4256(voting)N
+1278(at)X
+1372(said)X
+1551(meeting.)X
+720 4480(Section)N
+1039(2.)X
+1141(Any)X
+1336(member)X
+1682(so)X
+1797(charged)X
+2132(shall)X
+2344(be)X
+2465(given)X
+2710(written)X
+3014(notice)X
+3281(of)X
+3392(said)X
+3578(hearing)X
+3898(at)X
+3999(least)X
+720 4592(ten)N
+866(\(10\))X
+1054(days)X
+1258(prior)X
+1473(to)X
+1576(that)X
+1749(hearing,)X
+2090(and)X
+2257(such)X
+2461(member)X
+2805(shall)X
+3015(have)X
+3225(the)X
+3371(right)X
+3581(to)X
+3683(be)X
+3801(present)X
+4106(at)X
+720 4704(said)N
+899(hearing)X
+1212(for)X
+1348(the)X
+1490(purposes)X
+1855(of)X
+1959(defense.)X
+720 4928(Section)N
+1033(3.)X
+1129(Any)X
+1318(member)X
+1659(affected)X
+1995(by)X
+2116(Section)X
+2430(1,)X
+2527(Parts)X
+2744(\(a\))X
+2876(and)X
+3040(\(b\),)X
+3201(of)X
+3306(this)X
+3470(Article,)X
+3787(shall)X
+3994(have)X
+720 5040(thirty)N
+955(\(30\))X
+1141(days)X
+1343(to)X
+1444(appeal)X
+1722(said)X
+1903(proceedings.)X
+2418(Written)X
+2739(notice)X
+3001(of)X
+3107(appeal)X
+3384(shall)X
+3591(be)X
+3707(presented)X
+4101(to)X
+720 5152(the)N
+870(Recording)X
+1303(Secretary.)X
+1723(The)X
+1905(Board)X
+2172(shall)X
+2386(then,)X
+2609(in)X
+2717(turn,)X
+2929(present)X
+3240(the)X
+3391(matter)X
+3671(to)X
+3779(the)X
+3930(voting)X
+720 5264(membership)N
+1224(at)X
+1322(the)X
+1467(next)X
+1660(Regular)X
+1992(organization)X
+2501(meeting.)X
+2887(An)X
+3031(af\256rmative)X
+3481(vote)X
+3674(of)X
+3781(two-thirds)X
+720 5376(\(2/3\))N
+932(majority)X
+1284(of)X
+1389(the)X
+1532(voting)X
+1803(members)X
+2181(present)X
+2484(and)X
+2648(voting)X
+2919(at)X
+3014(said)X
+3194(meeting)X
+3530(shall)X
+3738(be)X
+3855(required)X
+720 5488(to)N
+819(sustain)X
+1110(the)X
+1252(actions)X
+1549(of)X
+1653(the)X
+1795(Board.)X
+
+8 p
+%%Page: 8 8
+11.00 ps
+12 s 12 xH 0 xS 1 f
+2368 400(-)N
+2424(8)X
+2496(-)X
+720 688(Section)N
+1044(4.)X
+1151(Any)X
+1351(person)X
+1643(whose)X
+1924(membership)X
+2436(is)X
+2536(terminated)X
+2985(according)X
+3401(to)X
+3512(Section)X
+3837(1)X
+3921(of)X
+4037(this)X
+720 800(article)N
+997(must)X
+1219(present)X
+1532(his)X
+1679(or)X
+1794(her)X
+1951(application)X
+2414(for)X
+2560(reinstatement)X
+3114(to)X
+3223(the)X
+3375(Executive)X
+3795(Board)X
+4064(for)X
+720 912(approval)N
+1081(prior)X
+1292(to)X
+1391(being)X
+1629(voted)X
+1867(upon)X
+2083(by)X
+2203(the)X
+2345(general)X
+2653(membership.)X
+3 f
+16 s
+2070 1168(ARTICLE)N
+2683(IX)X
+1464 1312(PARLIAM)N
+2074(ENTARY)X
+2644(AUTH)X
+3013(O)X
+3113(RITY)X
+1 f
+12 s
+720 1568(The)N
+900(rules)X
+1117(contained)X
+1522(in)X
+1627(the)X
+1776(current)X
+2080(edition)X
+2379(of)X
+2490(ROBERT'S)X
+2985(RULES)X
+3320(OF)X
+3473(ORDER)X
+3829(NEWLY)X
+720 1680(REVISED)N
+1156(shall)X
+1369(govern)X
+1666(the)X
+1814(organization)X
+2326(in)X
+2431(all)X
+2558(cases)X
+2791(to)X
+2896(which)X
+3161(they)X
+3357(are)X
+3505(applicable)X
+3932(and)X
+4101(in)X
+720 1792(which)N
+995(they)X
+1201(are)X
+1359(not)X
+1522(inconsistent)X
+2022(with)X
+2233(these)X
+2471(Bylaws)X
+2799(and)X
+2978(any)X
+3157(special)X
+3465(rules)X
+3693(of)X
+3814(order)X
+4058(the)X
+720 1904(organization)N
+1226(may)X
+1416(adopt.)X
+3 f
+16 s
+2095 2160(ARTICLE)N
+2708(X)X
+1980 2304(AM)N
+2193(ENDM)X
+2583(ENTS)X
+1 f
+12 s
+720 2560(Section)N
+1043(1.)X
+1149(Amendments)X
+1696(to)X
+1805(the)X
+1957(Bylaws)X
+2279(may)X
+2479(be)X
+2604(proposed)X
+2990(by)X
+3121(the)X
+3274(Executive)X
+3695(Board)X
+3965(or)X
+4080(by)X
+720 2672(written)N
+1032(petition)X
+1366(addressed)X
+1784(to)X
+1898(the)X
+2055(Recording)X
+2495(Secretary.)X
+2922(Amendments)X
+3474(proposed)X
+3865(by)X
+4000(such)X
+720 2784(petition)N
+1067(shall)X
+1301(be)X
+1444(promptly)X
+1849(considered)X
+2318(by)X
+2466(the)X
+2636(Board)X
+2923(and)X
+3114(must)X
+3353(be)X
+3497(submitted)X
+3930(to)X
+4058(the)X
+720 2896(members)N
+1104(with)X
+1306(the)X
+1455(recommendations)X
+2171(of)X
+2282(the)X
+2431(Board)X
+2696(by)X
+2822(the)X
+2970(Recording)X
+3401(Secretary)X
+3795(for)X
+3937(a)X
+4010(vote)X
+720 3008(within)N
+1008(thirty)X
+1259(\(30\))X
+1461(days)X
+1679(of)X
+1801(the)X
+1961(date)X
+2164(when)X
+2414(the)X
+2575(petition)X
+2913(was)X
+3105(received)X
+3475(by)X
+3614(the)X
+3775(Recording)X
+720 3120(Secretary.)N
+720 3344(Section)N
+1033(2.)X
+1129(The)X
+1303(Bylaws)X
+1615(may)X
+1805(be)X
+1920(amended)X
+2292(by)X
+2413(a)X
+2481(two-thirds)X
+2901(\(2/3\))X
+3113(vote)X
+3304(of)X
+3409(the)X
+3552(voting)X
+3823(members)X
+720 3456(present)N
+1027(and)X
+1195(voting)X
+1470(at)X
+1569(any)X
+1737(regular)X
+2039(or)X
+2148(special)X
+2445(meeting)X
+2785(called)X
+3045(for)X
+3186(the)X
+3332(purpose,)X
+3688(provided)X
+4058(the)X
+720 3568(proposed)N
+1110(amendments)X
+1636(have)X
+1857(been)X
+2078(included)X
+2449(in)X
+2563(the)X
+2720(notice)X
+2995(of)X
+3114(the)X
+3271(meeting)X
+3621(and)X
+3799(mailed)X
+4101(to)X
+720 3680(each)N
+921(member)X
+1261(at)X
+1355(least)X
+1556(six)X
+1692(\(6\))X
+1828(days)X
+2028(prior)X
+2239(to)X
+2338(the)X
+2480(date)X
+2665(of)X
+2769(the)X
+2911(meeting.)X
+3 f
+16 s
+2070 3936(ARTICLE)N
+2683(XI)X
+2061 4080(DO)N
+(NATIO)S
+2672(NS)X
+1 f
+12 s
+720 4336(The)N
+920(organization)X
+1452(may)X
+1668(accept)X
+1965(donations)X
+2389(in)X
+2514(the)X
+2683(form)X
+2921(of)X
+3052(money,)X
+3389(equipment)X
+3847(or)X
+3978(other)X
+720 4448(property)N
+1077(to)X
+1183(be)X
+1304(used)X
+1510(for)X
+1652(the)X
+1800(exclusive)X
+2194(bene\256t)X
+2486(of)X
+2596(the)X
+2744(membership,)X
+3274(provided)X
+3646(however,)X
+4031(that)X
+720 4560(all)N
+854(contributions)X
+1399(and)X
+1575(donations)X
+1987(to)X
+2100(the)X
+2256(organization)X
+2776(shall)X
+2996(be)X
+3125(subject)X
+3436(to)X
+3549(approval)X
+3924(by)X
+4058(the)X
+720 4672(Board.)N
+3 f
+16 s
+2045 4928(ARTICLE)N
+2658(XII)X
+2004 5072(DISSO)N
+2388(LUTIO)X
+2800(N)X
+1 f
+12 s
+720 5328(The)N
+905(organization)X
+1422(may)X
+1623(be)X
+1749(dissolved)X
+2147(at)X
+2252(any)X
+2426(time)X
+2633(by)X
+2764(the)X
+2917(written)X
+3225(consent)X
+3555(of)X
+3671(not)X
+3830(less)X
+4010(than)X
+720 5440(two-thirds)N
+1146(\(2/3\))X
+1364(of)X
+1475(the)X
+1624(voting)X
+1901(members)X
+2285(in)X
+2391(good)X
+2614(standing.)X
+2995(In)X
+3106(the)X
+3255(event)X
+3495(of)X
+3606(the)X
+3754(dissolution)X
+720 5552(of)N
+827(the)X
+972(organization,)X
+1505(whether)X
+1842(voluntary)X
+2238(or)X
+2345(involuntary)X
+2816(or)X
+2923(by)X
+3046(operation)X
+3437(of)X
+3544(law,)X
+3735(none)X
+3950(of)X
+4058(the)X
+720 5664(property)N
+1077(of)X
+1188(the)X
+1337(organization)X
+1850(nor)X
+2009(any)X
+2179(proceeds)X
+2552(thereof)X
+2855(nor)X
+3013(any)X
+3182(assets)X
+3436(of)X
+3546(the)X
+3694(organization)X
+720 5776(shall)N
+926(be)X
+1041(distributed)X
+1477(to)X
+1576(any)X
+1739(members)X
+2116(of)X
+2220(the)X
+2362(organization.)X
+2892(After)X
+3120(payment)X
+3477(of)X
+3582(the)X
+3725(debts)X
+3953(of)X
+4058(the)X
+
+9 p
+%%Page: 9 9
+11.00 ps
+12 s 12 xH 0 xS 1 f
+2368 400(-)N
+2424(9)X
+2496(-)X
+720 688(organization,)N
+1258(its)X
+1381(property)X
+1738(and)X
+1908(assets)X
+2163(shall)X
+2376(be)X
+2498(given)X
+2743(to)X
+2849(a)X
+2923(similar)X
+3222(organization)X
+3735(or)X
+3846(sold)X
+4037(and)X
+720 800(the)N
+862(money)X
+1148(donated)X
+1477(to)X
+1576(a)X
+1643(charitable)X
+2048(organization)X
+2554(selected)X
+2889(by)X
+3009(the)X
+3151(Executive)X
+3561(Board.)X
+3 f
+16 s
+2020 1056(ARTICLE)N
+2633(XIII)X
+1788 1200(O)N
+1888(RDER)X
+2281(O)X
+2381(F)X
+2491(BUSINESS)X
+1 f
+12 s
+720 1456(Section)N
+1039(1.)X
+1141(At)X
+1267(meetings)X
+1645(of)X
+1755(the)X
+1903(organization,)X
+2439(the)X
+2587(order)X
+2820(of)X
+2930(business,)X
+3309(so)X
+3424(far)X
+3562(as)X
+3673(the)X
+3822(character)X
+720 1568(and)N
+883(nature)X
+1148(of)X
+1252(the)X
+1394(meeting)X
+1729(may)X
+1919(permit,)X
+2219(shall)X
+2425(be)X
+2540(as)X
+2644(follows:)X
+1008 1792(a.)N
+1099(Calling)X
+1407(the)X
+1549(roll)X
+1008 1904(b.)N
+1113(Reading)X
+1467(and)X
+1639(correction)X
+2063(of)X
+2176(the)X
+2327(minutes)X
+2665(of)X
+2779(the)X
+2931(last)X
+3099(regular)X
+3406(organization)X
+1008 2016(meeting)N
+1343(and)X
+1506(any)X
+1669(special)X
+1961(meetings)X
+2333(or)X
+2437(Board)X
+2696(meetings)X
+3068(held)X
+3258(in)X
+3357(the)X
+3499(interim)X
+1008 2128(c.)N
+1099(Reports)X
+1422(of)X
+1526(of\256cers)X
+1008 2240(d.)N
+1104(Reports)X
+1427(of)X
+1531(committees)X
+1008 2352(e.)N
+1099(Un\256nished)X
+1544(business)X
+1008 2464(f.)N
+1088(New)X
+1293(business)X
+1008 2576(g.)N
+1104(Elections)X
+1487(\(at)X
+1613(annual)X
+1894(meeting\))X
+1008 2688(h.)N
+1104(Announcements)X
+720 2912(Section)N
+1039(2.)X
+1141(At)X
+1267(meetings)X
+1645(of)X
+1755(the)X
+1903(Board,)X
+2192(the)X
+2340(order)X
+2573(of)X
+2683(business,)X
+3062(unless)X
+3333(otherwise)X
+3738(directed)X
+4080(by)X
+720 3024(majority)N
+1071(vote)X
+1261(of)X
+1365(those)X
+1592(present,)X
+1918(shall)X
+2124(be)X
+2239(as)X
+2343(follows:)X
+1008 3248(a.)N
+1100(Reading)X
+1446(and)X
+1610(correction)X
+2026(of)X
+2132(the)X
+2276(minutes)X
+2607(of)X
+2713(the)X
+2857(last)X
+3017(regular)X
+3316(Board)X
+3577(meeting)X
+1008 3360(and)N
+1171(any)X
+1334(special)X
+1626(meetings)X
+1998(or)X
+2102(organization)X
+2608(meetings)X
+2980(held)X
+3170(in)X
+3269(the)X
+3411(interim)X
+1008 3472(b.)N
+1104(Report)X
+1390(of)X
+1494(the)X
+1636(1st)X
+1772(Vice)X
+1978(President)X
+1008 3584(c.)N
+1099(Report)X
+1385(of)X
+1489(the)X
+1631(2nd)X
+1799(Vice)X
+2005(President)X
+1008 3696(d.)N
+1104(Report)X
+1390(of)X
+1494(the)X
+1636(Recording)X
+2061(Secretary)X
+1008 3808(e.)N
+1099(Report)X
+1385(of)X
+1489(the)X
+1631(Corresponding)X
+2226(Secretary)X
+1008 3920(f.)N
+1088(Report)X
+1374(of)X
+1478(the)X
+1620(Treasurer)X
+1008 4032(g.)N
+1104(Report)X
+1390(of)X
+1494(Sergeant-at-arms)X
+1008 4144(h.)N
+1104(Reports)X
+1427(of)X
+1531(Committees)X
+1008 4256(i.)N
+1083(Old)X
+1251(business)X
+1008 4368(j.)N
+1083(New)X
+1288(business)X
+
+9 p
+%%Trailer
+xt
+%%Pages: 9
+%%DocumentNeededResources: font Times-Roman Times-Italic Times-Bold 
+%%+ Times-BoldItalic Helvetica Helvetica-Oblique Helvetica-Bold Helvetica-BoldOblique Courier 
+%%+ Courier-Oblique Courier-Bold Courier-BoldOblique Symbol 
+
+xs
