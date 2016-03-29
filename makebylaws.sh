@@ -1,8 +1,8 @@
-# This creates a pdf of the current bylaws, since that is the format
-# that orgtracker insists on these days. Make sure that ~kgb/bylaws.current
-# is up to date.
+# This creates a pdf of the current bylaws, since that is the format that
+# orgtracker insists on these days. Make sure that bylaws.current is up to
+# date.
 
-OFFICIAL_BYLAWS='/afs/andrew.cmu.edu/usr/kgb/bylaws.current'
+OFFICIAL_BYLAWS='bylaws.current'
 TEX_BYLAWS='bylaws.tex'
 PDF_BYLAWS='bylaws.pdf'
 
@@ -18,9 +18,14 @@ cat <<EOF >$TEX_BYLAWS
 \\begin{verbatim}
 EOF
 cat $OFFICIAL_BYLAWS >>$TEX_BYLAWS
-(echo; echo;
- echo -n "                 (Compiled ";
- date +"%B %d, %Y by ${USER})") >>$TEX_BYLAWS
+
+#NOW=$(date +"%B %d, %Y")
+#cat <<EOF >>$TEX_BYLAWS
+#
+#
+#                 (Compiled $NOW by $USER)
+#EOF
+
 cat <<EOF >>$TEX_BYLAWS
 \\end{verbatim}
 \\end{quote}
@@ -28,4 +33,4 @@ cat <<EOF >>$TEX_BYLAWS
 EOF
 
 pdflatex $TEX_BYLAWS
-cp $PDF_BYLAWS ..
+
