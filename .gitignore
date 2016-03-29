@@ -1,0 +1,17 @@
+## Core latex/pdflatex auxiliary files:
+*.aux
+*.lof
+*.log
+*.lot
+*.fls
+*.out
+*.toc
+*.fmt
+
+## Weirdly, the tex file itself is a generated file
+*.tex
+
+## Editors
+*.swp
+*~
+
