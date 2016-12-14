@@ -29,6 +29,12 @@ date will be correct.
 Whenever a PDF (current or amended) is generated, the previous PDF is moved to
 `archives` and timestamped.
 
+After the bylaws have been amended, be sure to update the following places:
+* The PDF on The Bridge
+* The Wiki
+* The copy in the Exec Dropbox
+* The AFS space - just pull the existing clone of this repo
+
 ### TL;DR
 
 * `make` : Generate `bylaws.pdf` from `bylaws.current`
