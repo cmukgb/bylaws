@@ -6,13 +6,13 @@ amended: bylaws_amended.pdf clean
 
 bylaws.pdf: bylaws.current musical_interlude.png
 	if [ -e bylaws.pdf ] ; then \
-		cp bylaws.pdf archives/bylaws.`date --rfc-3339='seconds' | sed 's/ /_/g'`.pdf ; \
+		cp bylaws.pdf archives/bylaws.`date +'%Y-%m-%d'`.pdf ; \
 	fi;
 	./makebylaws.sh
 
 bylaws_amended.pdf: bylaws.amended musical_interlude.png
 	if [ -e bylaws_amended.pdf ] ; then \
-		cp bylaws_amended.pdf archives/bylaws_amended.`date --rfc-3339='seconds' | sed 's/ /_/g'`.pdf ; \
+		cp bylaws_amended.pdf archives/bylaws_amended.`date +'%Y-%m-%d'`.pdf ; \
 	fi;
 	if [ -e bylaws.current ] ; then \
 		mv bylaws.current bylaws.current.temp ; \
