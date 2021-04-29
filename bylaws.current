@@ -260,12 +260,16 @@ Section 6. Seniority. Seniority of offices is: President, First Vice-President,
 Second Vice-President, Corresponding Secretary, Recording Secretary, Treasurer,
 and Sergeant-at-Arms.
 
+\end{verbatim}
+\begin{minipage}{\textwidth}
+\begin{verbatim}
                                   ARTICLE VI
                               MUSICAL INTERLUDE
 \end{verbatim}
 \begin{center}
 \scalebox{.87}{\includegraphics{musical_interlude.png}}
 \end{center}
+\end{minipage}
 
 \begin{verbatim}
 
@@ -473,7 +477,7 @@ been issued, the Executive Board must do the following:
         2) Any meeting held with an accused party may be held in the presence
         of a representative of the Student Activities team within the Office of
         Student Leadership, Involvement and Civic Engagement (hereafter,
-        “Student Activities”), at the discretion of the Executive Board.
+        "Student Activities"), at the discretion of the Executive Board.
 
     b. If the Executive Board believes that the complaint may require
     disciplinary action beyond a Reprimand (i.e., Probation, Suspension, or
@@ -577,7 +581,7 @@ written notice of such action to the accused party within 24 hours of the vote.
         obtained with the remaining officers, the motion cannot proceed.
 
         3) The Board will then vote on the motion to expel. No officer may
-        abstain. If there are two (2) or more “no” votes, the motion fails.
+        abstain. If there are two (2) or more "no" votes, the motion fails.
         Otherwise, it passes and the expulsion goes into effect.
 
     The Executive Board must immediately provide written notice of the
