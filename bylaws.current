@@ -260,6 +260,9 @@ Section 6. Seniority. Seniority of offices is: President, First Vice-President,
 Second Vice-President, Corresponding Secretary, Recording Secretary, Treasurer,
 and Sergeant-at-Arms.
 
+\end{verbatim}
+\newpage
+\begin{verbatim}
                                   ARTICLE VI
                               MUSICAL INTERLUDE
 \end{verbatim}
@@ -317,20 +320,32 @@ Section 3. Elections. The color of elections shall be purple.
     d. Election Procedure.  The election of each officer shall be concluded
     before the election of the next begins, and these elections shall be held
     in order of the chain of command. Write-in ballots or other invalid ballots
-    shall be considered as abstentions. The candidate receiving a majority of
-    the votes cast for each office shall be declared elected. In the case of an
-    all-way tie, an additional round shall be run. Should the tie repeat, the
-    winner shall be decided by the proctors of the election by random process.
-    Otherwise, candidates shall be eliminated by the following method:
+    shall be considered as abstentions. The system by which we will vote is
+    "Instant-runoff voting" as detailed below:
 
-        1) Sort candidates into tiers of people with the same number of votes.
+        1) Each general body member present at elections (or voting absentee)
+        will receive a ballot with the names of all candidates running for a
+        given officer position listed.
 
-        2) Starting with the lowest ranking tier, remove tiers from the running
-        in increasing order of rank until removing another would bring the
-        total number of votes removed above 1/3. If there are no tiers with a
-        number of votes below 1/3, remove the lowest ranking tier.
+        2) Members will rank candidates for each position. They may rank as
+        many or as few candidates as they would like until they have no
+        confidence in a candidate.
 
-        3) If more than one candidate remains, run another round.
+        3) Positions will be decided by counting votes and eliminating the
+        candidate with the fewest number of votes, until a single candidate
+        remains. That candidate is the winner of that position.
+
+        4) In the event of a tie between the candidates receiving the fewest
+        number of votes, the proctors will eliminate one candidate by random
+        process.
+
+        5) Each time a candidate is eliminated as the result of 3) and/or 4),
+        the votes for that candidate will be redistributed according to the
+        next candidate ranked on each ballot, until no further candidates are
+        ranked, at which point the ballot will be considered an abstention.
+
+        6) Officers elected to a position will be removed from the running for
+        the following positions up for election.
 
     The winner shall be announced by the election proctors. At least three of
     the election proctors shall sign a document in triplicate containing the
@@ -461,7 +476,7 @@ been issued, the Executive Board must do the following:
         2) Any meeting held with an accused party may be held in the presence
         of a representative of the Student Activities team within the Office of
         Student Leadership, Involvement and Civic Engagement (hereafter,
-        “Student Activities”), at the discretion of the Executive Board.
+        "Student Activities"), at the discretion of the Executive Board.
 
     b. If the Executive Board believes that the complaint may require
     disciplinary action beyond a Reprimand (i.e., Probation, Suspension, or
@@ -565,7 +580,7 @@ written notice of such action to the accused party within 24 hours of the vote.
         obtained with the remaining officers, the motion cannot proceed.
 
         3) The Board will then vote on the motion to expel. No officer may
-        abstain. If there are two (2) or more “no” votes, the motion fails.
+        abstain. If there are two (2) or more "no" votes, the motion fails.
         Otherwise, it passes and the expulsion goes into effect.
 
     The Executive Board must immediately provide written notice of the
@@ -696,4 +711,4 @@ directed by majority vote of those present, shall be as follows:
     business
 
 
-Last amended April 4, 2016
+Last amended March 28, 2017
